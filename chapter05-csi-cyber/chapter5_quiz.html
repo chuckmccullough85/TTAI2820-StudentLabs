@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 5: CSI Cyber - AI Security Forensics and Investigation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .progress-container {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            border-radius: 15px;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .quiz-content {
+            padding: 30px;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+        }
+
+        .question-number {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            font-weight: 500;
+        }
+
+        .options-container {
+            margin: 20px 0;
+        }
+
+        .option {
+            margin: 12px 0;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            border-color: #4CAF50;
+            background: #f8fff8;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+        }
+
+        .option.selected {
+            border-color: #4CAF50;
+            background: #e8f5e9;
+            font-weight: bold;
+        }
+
+        .option.correct {
+            border-color: #4CAF50;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .option-letter {
+            background: #e9ecef;
+            color: #495057;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.1em;
+        }
+
+        .option.selected .option-letter {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .option.correct .option-letter {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .option.incorrect .option-letter {
+            background: #f44336;
+            color: white;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+        }
+
+        .btn.secondary:hover {
+            box-shadow: 0 6px 16px rgba(33, 150, 243, 0.4);
+        }
+
+        .feedback {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .feedback.correct {
+            background: #e8f5e9;
+            border-color: #4CAF50;
+            color: #2e7d32;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+        }
+
+        .feedback-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .feedback-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .results {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .results-header {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .score-display {
+            font-size: 4em;
+            font-weight: bold;
+            color: #4CAF50;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .percentage {
+            font-size: 2.5em;
+            color: #666;
+            margin: 15px 0;
+        }
+
+        .performance {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 15px 30px;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .performance.excellent {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .performance.good {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .performance.fair {
+            background: #fffde7;
+            color: #f57f17;
+        }
+
+        .performance.needs-improvement {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .breakdown {
+            margin-top: 30px;
+            text-align: left;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .breakdown h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .breakdown-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 8px 15px;
+            border-radius: 8px;
+        }
+
+        .breakdown-item.correct {
+            background: #e8f5e9;
+        }
+
+        .breakdown-item.incorrect {
+            background: #ffebee;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .quiz-content {
+                padding: 20px;
+            }
+
+            .question-text {
+                font-size: 1.1em;
+            }
+
+            .score-display {
+                font-size: 3em;
+            }
+
+            .percentage {
+                font-size: 2em;
+            }
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .start-screen h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .start-screen p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .quiz-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .quiz-info h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="quizTitle">Chapter 5: CSI Cyber - AI Security Forensics and Investigation</h1>
+            <p id="quizDescription">Test your knowledge of AI forensics investigation, data poisoning detection, emerging threats, and incident response methodologies.</p>
+        </div>
+
+        <div id="startScreen" class="start-screen">
+            <h2>Ready to Test Your Knowledge?</h2>
+            <div class="quiz-info">
+                <h3>📝 Quiz Information</h3>
+                <p><strong>Questions:</strong> <span id="totalQuestions">10</span></p>
+                <p><strong>Time:</strong> No time limit - take your time!</p>
+                <p><strong>Assessment:</strong> Self-evaluation for learning</p>
+            </div>
+            <p>Click the button below to begin your quiz. Good luck!</p>
+            <button class="btn" onclick="startQuiz()">🚀 Start Quiz</button>
+        </div>
+
+        <div id="progressContainer" class="progress-container hidden">
+            <div class="progress-info">
+                <span id="questionProgress">Question 1 of 10</span>
+                <span id="scoreDisplay">Score: 0/0</span>
+            </div>
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill" style="width: 0%">0%</div>
+            </div>
+        </div>
+
+        <div id="quizContent" class="quiz-content hidden">
+            <div id="questionContainer" class="question-container">
+                <!-- Question content will be inserted here -->
+            </div>
+
+            <div id="feedbackContainer" class="hidden">
+                <!-- Feedback will be shown here -->
+            </div>
+
+            <div class="controls">
+                <button id="submitBtn" class="btn" onclick="submitAnswer()">Submit Answer</button>
+                <button id="nextBtn" class="btn secondary hidden" onclick="nextQuestion()">Next Question</button>
+                <button id="resultsBtn" class="btn secondary hidden" onclick="showResults()">View Results</button>
+            </div>
+        </div>
+
+        <div id="resultsContainer" class="results hidden">
+            <!-- Results will be shown here -->
+        </div>
+    </div>
+
+    <script>
+        // Quiz data will be embedded here
+        const QUIZ_DATA = {
+  "title": "Chapter 5: CSI Cyber - AI Security Forensics and Investigation",
+  "description": "Test your knowledge of AI forensics investigation, data poisoning detection, emerging threats, and incident response methodologies.",
+  "questions": [
+    {
+      "id": 1,
+      "question": "In the AI forensics investigation notebook, what was the primary purpose of using IsolationForest for anomaly detection?",
+      "options": [
+        {
+          "text": "To classify training data into different categories",
+          "correct": false,
+          "explanation": "Incorrect. IsolationForest is not used for classification but for anomaly detection."
+        },
+        {
+          "text": "To identify potentially poisoned samples in the training dataset",
+          "correct": true,
+          "explanation": "Correct! IsolationForest was used as an anomaly detection technique to identify samples that deviate from normal patterns, which could indicate data poisoning attacks."
+        },
+        {
+          "text": "To improve the accuracy of the Random Forest model",
+          "correct": false,
+          "explanation": "Incorrect. IsolationForest is used for detection, not improving model accuracy."
+        },
+        {
+          "text": "To reduce the dimensionality of the feature space",
+          "correct": false,
+          "explanation": "Incorrect. Dimensionality reduction is done with techniques like PCA, not IsolationForest."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "question": "According to the enhanced poisoning scenario, what was the impact of the aggressive data poisoning attack on model performance?",
+      "options": [
+        {
+          "text": "Approximately 2-3% accuracy degradation",
+          "correct": false,
+          "explanation": "Incorrect. The impact was much more significant than 2-3%."
+        },
+        {
+          "text": "No measurable impact on accuracy",
+          "correct": false,
+          "explanation": "Incorrect. The enhanced poisoning attack had a clear, measurable impact."
+        },
+        {
+          "text": "Approximately 7-8% accuracy degradation",
+          "correct": true,
+          "explanation": "Correct! The enhanced aggressive poisoning attack resulted in approximately 7.4% performance degradation, dropping from 95.8% to 88.7% accuracy."
+        },
+        {
+          "text": "Complete model failure with 0% accuracy",
+          "correct": false,
+          "explanation": "Incorrect. While the attack was effective, it didn't cause complete model failure."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "question": "Which phase of the AI Forensics Framework focuses on preserving model parameters and training data before any analysis begins?",
+      "options": [
+        {
+          "text": "Attack Vector Reconstruction",
+          "correct": false,
+          "explanation": "Incorrect. Attack Vector Reconstruction focuses on understanding how the attack occurred, not preserving evidence."
+        },
+        {
+          "text": "Model Integrity Analysis",
+          "correct": false,
+          "explanation": "Incorrect. Model Integrity Analysis examines the models after evidence is collected."
+        },
+        {
+          "text": "Evidence Collection",
+          "correct": true,
+          "explanation": "Correct! Evidence Collection is the critical first phase that focuses on preserving model parameters, training data, and system state before any modifications occur."
+        },
+        {
+          "text": "Attribution and Intelligence",
+          "correct": false,
+          "explanation": "Incorrect. Attribution and Intelligence focuses on identifying threat actors, not preserving evidence."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "question": "In federated learning environments, what type of attack involves malicious participants sending corrupted model updates?",
+      "options": [
+        {
+          "text": "Gradient leakage attacks",
+          "correct": false,
+          "explanation": "Incorrect. Gradient leakage attacks involve extracting private data from gradients, not sending corrupted updates."
+        },
+        {
+          "text": "Membership inference attacks",
+          "correct": false,
+          "explanation": "Incorrect. Membership inference attacks determine if data was used in training, not corrupting updates."
+        },
+        {
+          "text": "Byzantine attacks",
+          "correct": true,
+          "explanation": "Correct! Byzantine attacks in federated learning involve malicious participants deliberately sending corrupted or poisoned model updates to compromise the global model."
+        },
+        {
+          "text": "Model extraction attacks",
+          "correct": false,
+          "explanation": "Incorrect. Model extraction attacks involve stealing model functionality, not corrupting updates."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "question": "What distinguishes AI-generated cyber attacks from traditional automated attacks?",
+      "options": [
+        {
+          "text": "They only target machine learning systems",
+          "correct": false,
+          "explanation": "Incorrect. AI-generated attacks can target various systems, not just ML systems."
+        },
+        {
+          "text": "They can adapt and learn from defensive responses in real-time",
+          "correct": true,
+          "explanation": "Correct! AI-generated attacks can adapt and improve based on defensive responses, making them more sophisticated than traditional automated attacks that follow fixed patterns."
+        },
+        {
+          "text": "They are always detectable through signature analysis",
+          "correct": false,
+          "explanation": "Incorrect. AI-generated attacks can be designed to evade signature-based detection."
+        },
+        {
+          "text": "They require less computational resources to execute",
+          "correct": false,
+          "explanation": "Incorrect. AI-generated attacks typically require more computational resources, not less."
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "question": "Which technique is most effective for detecting systematic label flipping in a data poisoning investigation?",
+      "options": [
+        {
+          "text": "Monitoring network traffic patterns",
+          "correct": false,
+          "explanation": "Incorrect. Network traffic monitoring won't reveal label flipping in the training data."
+        },
+        {
+          "text": "Analyzing confusion matrix differences between clean and suspect models",
+          "correct": true,
+          "explanation": "Correct! Confusion matrix analysis reveals systematic misclassification patterns that indicate label flipping attacks, showing which classes are being incorrectly targeted."
+        },
+        {
+          "text": "Checking file access logs",
+          "correct": false,
+          "explanation": "Incorrect. File access logs might show who accessed data but not the content of label modifications."
+        },
+        {
+          "text": "Examining GPU utilization metrics",
+          "correct": false,
+          "explanation": "Incorrect. GPU metrics show computational usage but not data content issues."
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "question": "In the context of Large Language Model (LLM) security, what is 'jailbreaking'?",
+      "options": [
+        {
+          "text": "Extracting the model's training data",
+          "correct": false,
+          "explanation": "Incorrect. Data extraction is a different type of attack focused on retrieving training information."
+        },
+        {
+          "text": "Bypassing the model's safety restrictions and filters",
+          "correct": true,
+          "explanation": "Correct! Jailbreaking refers to techniques used to bypass LLM safety restrictions and filters, often through clever prompt engineering to make the model produce prohibited content."
+        },
+        {
+          "text": "Stealing the model's architecture and parameters",
+          "correct": false,
+          "explanation": "Incorrect. This describes model theft or extraction, not jailbreaking."
+        },
+        {
+          "text": "Improving the model's performance beyond designed limits",
+          "correct": false,
+          "explanation": "Incorrect. Jailbreaking is about bypassing restrictions, not improving performance."
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "question": "What is the primary challenge when investigating autonomous AI attack campaigns?",
+      "options": [
+        {
+          "text": "Limited computational resources for analysis",
+          "correct": false,
+          "explanation": "Incorrect. While resources matter, this isn't the primary challenge with autonomous attacks."
+        },
+        {
+          "text": "Lack of traditional digital forensic tools",
+          "correct": false,
+          "explanation": "Incorrect. Traditional tools still have value, though new tools are needed."
+        },
+        {
+          "text": "Attack methods changing faster than investigation capabilities",
+          "correct": true,
+          "explanation": "Correct! Autonomous AI attacks can adapt and change their methods in real-time, often faster than human investigators can analyze and respond to them."
+        },
+        {
+          "text": "Insufficient legal frameworks for prosecution",
+          "correct": false,
+          "explanation": "Incorrect. While legal frameworks need updating, this isn't the primary technical investigation challenge."
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "question": "In AI supply chain security, which component poses the highest risk for introducing backdoors?",
+      "options": [
+        {
+          "text": "Hardware accelerators (GPUs/TPUs)",
+          "correct": false,
+          "explanation": "Incorrect. While hardware can pose risks, software components are typically higher risk for backdoors."
+        },
+        {
+          "text": "Pre-trained models downloaded from public repositories",
+          "correct": true,
+          "explanation": "Correct! Pre-trained models from public repositories pose the highest risk as they can contain hidden backdoors that are difficult to detect without comprehensive testing."
+        },
+        {
+          "text": "Data preprocessing libraries",
+          "correct": false,
+          "explanation": "Incorrect. While libraries can be compromised, pre-trained models pose a higher backdoor risk."
+        },
+        {
+          "text": "Network communication protocols",
+          "correct": false,
+          "explanation": "Incorrect. Network protocols are important for data transmission security but not the highest backdoor risk."
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "question": "According to the AI Incident Response Framework, what should be the immediate priority during the containment phase?",
+      "options": [
+        {
+          "text": "Determining the identity of the threat actor",
+          "correct": false,
+          "explanation": "Incorrect. Attribution is important but not the immediate priority during containment."
+        },
+        {
+          "text": "Collecting evidence for legal prosecution",
+          "correct": false,
+          "explanation": "Incorrect. Evidence collection is important but containment focuses on stopping the attack first."
+        },
+        {
+          "text": "Isolating affected AI models and quarantining compromised data",
+          "correct": true,
+          "explanation": "Correct! During containment, the immediate priority is isolating affected systems and quarantining compromised data to prevent further damage or spread of the attack."
+        },
+        {
+          "text": "Documenting lessons learned for future prevention",
+          "correct": false,
+          "explanation": "Incorrect. Lessons learned documentation happens after the incident is contained and resolved."
+        }
+      ]
+    }
+  ]
+};
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answers = [];
+        let selectedAnswer = null;
+
+        function startQuiz() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('progressContainer').classList.remove('hidden');
+            document.getElementById('quizContent').classList.remove('hidden');
+            
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = QUIZ_DATA.questions[currentQuestion];
+            const container = document.getElementById('questionContainer');
+            
+            // Update progress
+            updateProgress();
+            
+            // Create question HTML
+            let optionsHTML = '';
+            question.options.forEach((option, index) => {
+                const letter = String.fromCharCode(65 + index); // A, B, C, D...
+                optionsHTML += `
+                    <div class="option" onclick="selectOption(${index})">
+                        <div class="option-letter">${letter}</div>
+                        <div class="option-text">${escapeHtml(option.text)}</div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <div class="question-header">
+                    <div class="question-number">${currentQuestion + 1}</div>
+                    <div class="question-text">${escapeHtml(question.question)}</div>
+                </div>
+                <div class="options-container">
+                    ${optionsHTML}
+                </div>
+            `;
+
+            // Reset controls
+            selectedAnswer = null;
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').classList.remove('hidden');
+            document.getElementById('feedbackContainer').classList.add('hidden');
+            document.getElementById('nextBtn').classList.add('hidden');
+            document.getElementById('resultsBtn').classList.add('hidden');
+        }
+
+        function selectOption(index) {
+            // Remove previous selection
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // Add selection to clicked option
+            document.querySelectorAll('.option')[index].classList.add('selected');
+            
+            selectedAnswer = index;
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        function submitAnswer() {
+            if (selectedAnswer === null) return;
+
+            const question = QUIZ_DATA.questions[currentQuestion];
+            const selectedOption = question.options[selectedAnswer];
+            const isCorrect = selectedOption.correct;
+
+            // Record answer
+            answers.push({
+                questionId: question.id,
+                selectedIndex: selectedAnswer,
+                correct: isCorrect
+            });
+
+            if (isCorrect) {
+                score++;
+            }
+
+            // Show feedback
+            showFeedback(selectedOption, isCorrect);
+
+            // Update score display
+            updateProgress();
+
+            // Disable submit button
+            document.getElementById('submitBtn').classList.add('hidden');
+
+            // Show appropriate next button
+            if (currentQuestion < QUIZ_DATA.questions.length - 1) {
+                document.getElementById('nextBtn').classList.remove('hidden');
+            } else {
+                document.getElementById('resultsBtn').classList.remove('hidden');
+            }
+        }
+
+        function showFeedback(selectedOption, isCorrect) {
+            const container = document.getElementById('feedbackContainer');
+            const question = QUIZ_DATA.questions[currentQuestion];
+            
+            let feedbackHTML = `
+                <div class="feedback ${isCorrect ? 'correct' : 'incorrect'}">
+                    <div class="feedback-title">
+                        <span class="feedback-icon">${isCorrect ? '✅' : '❌'}</span>
+                        ${isCorrect ? 'Correct!' : 'Incorrect'}
+                    </div>
+                    <div class="explanation">
+                        <strong>Your answer:</strong> ${escapeHtml(selectedOption.text)}<br>
+                        <strong>Explanation:</strong> ${escapeHtml(selectedOption.explanation)}
+                    </div>
+                </div>
+            `;
+
+            // Show correct answer if wrong
+            if (!isCorrect) {
+                const correctOption = question.options.find(opt => opt.correct);
+                const correctIndex = question.options.findIndex(opt => opt.correct);
+                const correctLetter = String.fromCharCode(65 + correctIndex);
+                
+                feedbackHTML += `
+                    <div class="feedback correct" style="margin-top: 15px;">
+                        <div class="feedback-title">
+                            <span class="feedback-icon">✓</span>
+                            Correct Answer: ${correctLetter}) ${escapeHtml(correctOption.text)}
+                        </div>
+                    </div>
+                `;
+
+                // Highlight correct option
+                document.querySelectorAll('.option')[correctIndex].classList.add('correct');
+                document.querySelectorAll('.option')[selectedAnswer].classList.add('incorrect');
+            } else {
+                document.querySelectorAll('.option')[selectedAnswer].classList.add('correct');
+            }
+
+            container.innerHTML = feedbackHTML;
+            container.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResults() {
+            document.getElementById('progressContainer').classList.add('hidden');
+            document.getElementById('quizContent').classList.add('hidden');
+            
+            const container = document.getElementById('resultsContainer');
+            const totalQuestions = QUIZ_DATA.questions.length;
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            let performance, performanceClass;
+            if (percentage >= 90) {
+                performance = '🌟 Excellent!';
+                performanceClass = 'excellent';
+            } else if (percentage >= 70) {
+                performance = '👍 Good job!';
+                performanceClass = 'good';
+            } else if (percentage >= 50) {
+                performance = '👌 Fair';
+                performanceClass = 'fair';
+            } else {
+                performance = '📚 Needs improvement';
+                performanceClass = 'needs-improvement';
+            }
+
+            // Create breakdown
+            let breakdownHTML = '';
+            answers.forEach((answer, index) => {
+                const icon = answer.correct ? '✅' : '❌';
+                const status = answer.correct ? 'Correct' : 'Incorrect';
+                const className = answer.correct ? 'correct' : 'incorrect';
+                breakdownHTML += `
+                    <div class="breakdown-item ${className}">
+                        ${icon} <strong>Question ${index + 1}:</strong> ${status}
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <div class="results-header">🎉 Quiz Complete! 🎉</div>
+                <div class="score-display">${score}/${totalQuestions}</div>
+                <div class="percentage">${percentage}%</div>
+                <div class="performance ${performanceClass}">${performance}</div>
+                
+                <div class="breakdown">
+                    <h3>📊 Question Breakdown</h3>
+                    ${breakdownHTML}
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <button class="btn" onclick="restartQuiz()">🔄 Take Quiz Again</button>
+                </div>
+
+                <div style="margin-top: 20px; color: #666;">
+                    <p>Thank you for taking the <strong>${escapeHtml(QUIZ_DATA.title)}</strong>!</p>
+                </div>
+            `;
+            
+            container.classList.remove('hidden');
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answers = [];
+            selectedAnswer = null;
+            
+            document.getElementById('resultsContainer').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+        }
+
+        function updateProgress() {
+            const totalQuestions = QUIZ_DATA.questions.length;
+            const progressPercent = Math.round((currentQuestion / totalQuestions) * 100);
+            const answeredQuestions = answers.length;
+            
+            document.getElementById('questionProgress').textContent = 
+                `Question ${currentQuestion + 1} of ${totalQuestions}`;
+            document.getElementById('scoreDisplay').textContent = 
+                `Score: ${score}/${answeredQuestions}`;
+            document.getElementById('progressFill').style.width = `${progressPercent}%`;
+            document.getElementById('progressFill').textContent = `${progressPercent}%`;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Initialize quiz info on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('totalQuestions').textContent = QUIZ_DATA.questions.length;
+        });
+    </script>
+</body>
+</html>

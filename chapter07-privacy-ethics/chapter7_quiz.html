@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 7: AI Privacy and Ethical Considerations Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .progress-container {
+            padding: 20px 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 25px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            border-radius: 15px;
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .quiz-content {
+            padding: 30px;
+        }
+
+        .question-container {
+            margin-bottom: 30px;
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(33, 150, 243, 0.3);
+        }
+
+        .question-number {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.2em;
+        }
+
+        .question-text {
+            font-size: 1.3em;
+            font-weight: 500;
+        }
+
+        .options-container {
+            margin: 20px 0;
+        }
+
+        .option {
+            margin: 12px 0;
+            padding: 15px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #fff;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            border-color: #4CAF50;
+            background: #f8fff8;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+        }
+
+        .option.selected {
+            border-color: #4CAF50;
+            background: #e8f5e9;
+            font-weight: bold;
+        }
+
+        .option.correct {
+            border-color: #4CAF50;
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .option.incorrect {
+            border-color: #f44336;
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .option-letter {
+            background: #e9ecef;
+            color: #495057;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.1em;
+        }
+
+        .option.selected .option-letter {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .option.correct .option-letter {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .option.incorrect .option-letter {
+            background: #f44336;
+            color: white;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 10px;
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+        }
+
+        .btn.secondary:hover {
+            box-shadow: 0 6px 16px rgba(33, 150, 243, 0.4);
+        }
+
+        .feedback {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .feedback.correct {
+            background: #e8f5e9;
+            border-color: #4CAF50;
+            color: #2e7d32;
+        }
+
+        .feedback.incorrect {
+            background: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+        }
+
+        .feedback-icon {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .feedback-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .results {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .results-header {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .score-display {
+            font-size: 4em;
+            font-weight: bold;
+            color: #4CAF50;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .percentage {
+            font-size: 2.5em;
+            color: #666;
+            margin: 15px 0;
+        }
+
+        .performance {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 15px 30px;
+            border-radius: 25px;
+            display: inline-block;
+        }
+
+        .performance.excellent {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .performance.good {
+            background: #fff3e0;
+            color: #ef6c00;
+        }
+
+        .performance.fair {
+            background: #fffde7;
+            color: #f57f17;
+        }
+
+        .performance.needs-improvement {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .breakdown {
+            margin-top: 30px;
+            text-align: left;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .breakdown h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .breakdown-item {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 8px 15px;
+            border-radius: 8px;
+        }
+
+        .breakdown-item.correct {
+            background: #e8f5e9;
+        }
+
+        .breakdown-item.incorrect {
+            background: #ffebee;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 10px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .quiz-content {
+                padding: 20px;
+            }
+
+            .question-text {
+                font-size: 1.1em;
+            }
+
+            .score-display {
+                font-size: 3em;
+            }
+
+            .percentage {
+                font-size: 2em;
+            }
+        }
+
+        .start-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .start-screen h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .start-screen p {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .quiz-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #4CAF50;
+        }
+
+        .quiz-info h3 {
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="quizTitle">Chapter 7: AI Privacy and Ethical Considerations Quiz</h1>
+            <p id="quizDescription">Test your understanding of differential privacy, ethical AI frameworks, algorithmic bias, and privacy-preserving techniques in AI systems.</p>
+        </div>
+
+        <div id="startScreen" class="start-screen">
+            <h2>Ready to Test Your Knowledge?</h2>
+            <div class="quiz-info">
+                <h3>📝 Quiz Information</h3>
+                <p><strong>Questions:</strong> <span id="totalQuestions">10</span></p>
+                <p><strong>Time:</strong> No time limit - take your time!</p>
+                <p><strong>Assessment:</strong> Self-evaluation for learning</p>
+            </div>
+            <p>Click the button below to begin your quiz. Good luck!</p>
+            <button class="btn" onclick="startQuiz()">🚀 Start Quiz</button>
+        </div>
+
+        <div id="progressContainer" class="progress-container hidden">
+            <div class="progress-info">
+                <span id="questionProgress">Question 1 of 10</span>
+                <span id="scoreDisplay">Score: 0/0</span>
+            </div>
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill" style="width: 0%">0%</div>
+            </div>
+        </div>
+
+        <div id="quizContent" class="quiz-content hidden">
+            <div id="questionContainer" class="question-container">
+                <!-- Question content will be inserted here -->
+            </div>
+
+            <div id="feedbackContainer" class="hidden">
+                <!-- Feedback will be shown here -->
+            </div>
+
+            <div class="controls">
+                <button id="submitBtn" class="btn" onclick="submitAnswer()">Submit Answer</button>
+                <button id="nextBtn" class="btn secondary hidden" onclick="nextQuestion()">Next Question</button>
+                <button id="resultsBtn" class="btn secondary hidden" onclick="showResults()">View Results</button>
+            </div>
+        </div>
+
+        <div id="resultsContainer" class="results hidden">
+            <!-- Results will be shown here -->
+        </div>
+    </div>
+
+    <script>
+        // Quiz data will be embedded here
+        const QUIZ_DATA = {
+  "title": "Chapter 7: AI Privacy and Ethical Considerations Quiz",
+  "description": "Test your understanding of differential privacy, ethical AI frameworks, algorithmic bias, and privacy-preserving techniques in AI systems.",
+  "questions": [
+    {
+      "id": "q1",
+      "question": "What is the primary purpose of the privacy parameter (ε) in differential privacy?",
+      "options": [
+        {
+          "text": "To measure the computational cost of privacy protection",
+          "correct": false,
+          "explanation": "Epsilon does not measure computational cost but rather privacy protection strength."
+        },
+        {
+          "text": "To control the trade-off between privacy protection and data utility",
+          "correct": true,
+          "explanation": "Correct! Epsilon (ε) controls the privacy-utility trade-off: lower ε provides stronger privacy but more noise, while higher ε provides less privacy but more accurate results."
+        },
+        {
+          "text": "To determine the number of queries allowed on a dataset",
+          "correct": false,
+          "explanation": "While epsilon affects how many queries can be run within a privacy budget, it primarily controls the noise level, not query count directly."
+        },
+        {
+          "text": "To encrypt sensitive data before analysis",
+          "correct": false,
+          "explanation": "Epsilon controls noise addition, not encryption. Differential privacy and encryption are different privacy techniques."
+        }
+      ]
+    },
+    {
+      "id": "q2",
+      "question": "In our differential privacy simulation, what happened when we tried to execute a query that would exceed the privacy budget?",
+      "options": [
+        {
+          "text": "The query executed with maximum noise added",
+          "correct": false,
+          "explanation": "The system doesn't automatically add maximum noise when budget is exceeded."
+        },
+        {
+          "text": "The query was blocked and an error message was displayed",
+          "correct": true,
+          "explanation": "Correct! The privacy accountant prevented the query execution and displayed 'Insufficient privacy budget!' to protect against privacy budget overspending."
+        },
+        {
+          "text": "The query executed normally without privacy protection",
+          "correct": false,
+          "explanation": "This would violate privacy protection principles. The system prevents execution rather than removing protection."
+        },
+        {
+          "text": "The privacy budget was automatically increased",
+          "correct": false,
+          "explanation": "Privacy budgets cannot be automatically increased as this would violate the mathematical guarantees of differential privacy."
+        }
+      ]
+    },
+    {
+      "id": "q3",
+      "question": "Which differential privacy mechanism provides 'pure' ε-differential privacy?",
+      "options": [
+        {
+          "text": "Gaussian mechanism",
+          "correct": false,
+          "explanation": "The Gaussian mechanism provides (ε,δ)-differential privacy, which includes a small probability parameter δ."
+        },
+        {
+          "text": "Laplace mechanism",
+          "correct": true,
+          "explanation": "Correct! The Laplace mechanism provides pure ε-differential privacy without any additional probability parameter, making it simpler to analyze."
+        },
+        {
+          "text": "Exponential mechanism",
+          "correct": false,
+          "explanation": "While the exponential mechanism can provide pure ε-DP, the Laplace mechanism is the primary one discussed in our activity."
+        },
+        {
+          "text": "Random response mechanism",
+          "correct": false,
+          "explanation": "Random response is a local differential privacy technique, not the primary mechanism for pure ε-DP in our context."
+        }
+      ]
+    },
+    {
+      "id": "q4",
+      "question": "What is 'sensitivity' in the context of differential privacy?",
+      "options": [
+        {
+          "text": "How sensitive the dataset is from a legal compliance perspective",
+          "correct": false,
+          "explanation": "Sensitivity in DP is a mathematical concept, not a legal classification."
+        },
+        {
+          "text": "The maximum amount a single individual's data can change a query result",
+          "correct": true,
+          "explanation": "Correct! Sensitivity measures the maximum possible change in query output when one person's data is added or removed, which determines how much noise is needed."
+        },
+        {
+          "text": "The probability that private information will be revealed",
+          "correct": false,
+          "explanation": "This describes privacy risk, not sensitivity. Sensitivity is about query output variability."
+        },
+        {
+          "text": "The computational resources required for privacy protection",
+          "correct": false,
+          "explanation": "Sensitivity is about mathematical bounds on query changes, not computational requirements."
+        }
+      ]
+    },
+    {
+      "id": "q5",
+      "question": "In our privacy-utility trade-off analysis, what pattern did we observe as epsilon (ε) values increased?",
+      "options": [
+        {
+          "text": "Query errors increased exponentially",
+          "correct": false,
+          "explanation": "The opposite occurred - errors decreased as epsilon increased."
+        },
+        {
+          "text": "Query errors decreased exponentially, providing better accuracy",
+          "correct": true,
+          "explanation": "Correct! As epsilon increased (weaker privacy), query errors decreased exponentially, showing the fundamental privacy-utility trade-off."
+        },
+        {
+          "text": "Query errors remained constant regardless of epsilon",
+          "correct": false,
+          "explanation": "Errors clearly varied with epsilon values, demonstrating the privacy-utility relationship."
+        },
+        {
+          "text": "Privacy protection increased proportionally",
+          "correct": false,
+          "explanation": "Higher epsilon means weaker privacy protection, not stronger protection."
+        }
+      ]
+    },
+    {
+      "id": "q6",
+      "question": "What type of bias occurs when training data reflects past discriminatory practices?",
+      "options": [
+        {
+          "text": "Measurement bias",
+          "correct": false,
+          "explanation": "Measurement bias involves systematic errors in data collection, not historical discrimination."
+        },
+        {
+          "text": "Representation bias",
+          "correct": false,
+          "explanation": "Representation bias involves underrepresentation of groups, not historical discrimination patterns."
+        },
+        {
+          "text": "Historical bias",
+          "correct": true,
+          "explanation": "Correct! Historical bias occurs when training data reflects past societal discrimination, causing AI systems to perpetuate these unfair patterns."
+        },
+        {
+          "text": "Evaluation bias",
+          "correct": false,
+          "explanation": "Evaluation bias involves inappropriate metrics or benchmarks, not historical discrimination in training data."
+        }
+      ]
+    },
+    {
+      "id": "q7",
+      "question": "Which privacy-preserving technique allows training AI models without centralizing sensitive data?",
+      "options": [
+        {
+          "text": "Differential privacy",
+          "correct": false,
+          "explanation": "Differential privacy adds noise to protect privacy but doesn't address data centralization."
+        },
+        {
+          "text": "Homomorphic encryption",
+          "correct": false,
+          "explanation": "Homomorphic encryption enables computation on encrypted data but doesn't prevent centralization."
+        },
+        {
+          "text": "Federated learning",
+          "correct": true,
+          "explanation": "Correct! Federated learning trains models across distributed devices without centralizing the raw data, keeping sensitive information on local devices."
+        },
+        {
+          "text": "Synthetic data generation",
+          "correct": false,
+          "explanation": "Synthetic data creates artificial datasets but doesn't address the centralization of original data."
+        }
+      ]
+    },
+    {
+      "id": "q8",
+      "question": "What does 'Statistical Parity' measure in algorithmic fairness?",
+      "options": [
+        {
+          "text": "Equal accuracy rates across all demographic groups",
+          "correct": false,
+          "explanation": "Equal accuracy rates relate to equalized odds, not statistical parity."
+        },
+        {
+          "text": "Equal positive prediction rates across demographic groups",
+          "correct": true,
+          "explanation": "Correct! Statistical parity requires that the proportion of positive predictions is equal across different demographic groups, regardless of the base rates."
+        },
+        {
+          "text": "Similar individuals receiving similar predictions",
+          "correct": false,
+          "explanation": "This describes individual fairness, not statistical parity."
+        },
+        {
+          "text": "Equal false positive and negative rates across groups",
+          "correct": false,
+          "explanation": "This describes equalized odds, not statistical parity."
+        }
+      ]
+    },
+    {
+      "id": "q9",
+      "question": "In our healthcare scenario, why was the privacy budget composition important?",
+      "options": [
+        {
+          "text": "It determined which statistical tests could be performed",
+          "correct": false,
+          "explanation": "Privacy budget composition is about managing cumulative privacy loss, not statistical test selection."
+        },
+        {
+          "text": "Multiple queries compound privacy loss, requiring careful budget management",
+          "correct": true,
+          "explanation": "Correct! Each query consumes privacy budget, and multiple queries compound the privacy loss, so careful budget allocation across all planned analyses is essential."
+        },
+        {
+          "text": "It ensured HIPAA compliance automatically",
+          "correct": false,
+          "explanation": "While privacy budgets help with compliance, they don't automatically ensure HIPAA compliance without proper implementation."
+        },
+        {
+          "text": "It determined the accuracy of medical diagnoses",
+          "correct": false,
+          "explanation": "Privacy budgets manage privacy protection levels, not diagnostic accuracy directly."
+        }
+      ]
+    },
+    {
+      "id": "q10",
+      "question": "According to the material, what is a key advantage of the Gaussian mechanism over the Laplace mechanism?",
+      "options": [
+        {
+          "text": "It requires less computational resources",
+          "correct": false,
+          "explanation": "Computational efficiency wasn't identified as a key advantage of Gaussian over Laplace."
+        },
+        {
+          "text": "It provides stronger privacy guarantees",
+          "correct": false,
+          "explanation": "Both mechanisms can provide strong privacy; the difference lies in the type of guarantees and composition properties."
+        },
+        {
+          "text": "It has better composition properties for multiple queries",
+          "correct": true,
+          "explanation": "Correct! The Gaussian mechanism has superior composition properties, making it better suited for complex analytics workflows involving multiple related queries."
+        },
+        {
+          "text": "It never requires a delta (δ) parameter",
+          "correct": false,
+          "explanation": "The Gaussian mechanism specifically uses (ε,δ)-differential privacy, which includes the delta parameter."
+        }
+      ]
+    }
+  ]
+};
+
+        let currentQuestion = 0;
+        let score = 0;
+        let answers = [];
+        let selectedAnswer = null;
+
+        function startQuiz() {
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('progressContainer').classList.remove('hidden');
+            document.getElementById('quizContent').classList.remove('hidden');
+            
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = QUIZ_DATA.questions[currentQuestion];
+            const container = document.getElementById('questionContainer');
+            
+            // Update progress
+            updateProgress();
+            
+            // Create question HTML
+            let optionsHTML = '';
+            question.options.forEach((option, index) => {
+                const letter = String.fromCharCode(65 + index); // A, B, C, D...
+                optionsHTML += `
+                    <div class="option" onclick="selectOption(${index})">
+                        <div class="option-letter">${letter}</div>
+                        <div class="option-text">${escapeHtml(option.text)}</div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <div class="question-header">
+                    <div class="question-number">${currentQuestion + 1}</div>
+                    <div class="question-text">${escapeHtml(question.question)}</div>
+                </div>
+                <div class="options-container">
+                    ${optionsHTML}
+                </div>
+            `;
+
+            // Reset controls
+            selectedAnswer = null;
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').classList.remove('hidden');
+            document.getElementById('feedbackContainer').classList.add('hidden');
+            document.getElementById('nextBtn').classList.add('hidden');
+            document.getElementById('resultsBtn').classList.add('hidden');
+        }
+
+        function selectOption(index) {
+            // Remove previous selection
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+
+            // Add selection to clicked option
+            document.querySelectorAll('.option')[index].classList.add('selected');
+            
+            selectedAnswer = index;
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        function submitAnswer() {
+            if (selectedAnswer === null) return;
+
+            const question = QUIZ_DATA.questions[currentQuestion];
+            const selectedOption = question.options[selectedAnswer];
+            const isCorrect = selectedOption.correct;
+
+            // Record answer
+            answers.push({
+                questionId: question.id,
+                selectedIndex: selectedAnswer,
+                correct: isCorrect
+            });
+
+            if (isCorrect) {
+                score++;
+            }
+
+            // Show feedback
+            showFeedback(selectedOption, isCorrect);
+
+            // Update score display
+            updateProgress();
+
+            // Disable submit button
+            document.getElementById('submitBtn').classList.add('hidden');
+
+            // Show appropriate next button
+            if (currentQuestion < QUIZ_DATA.questions.length - 1) {
+                document.getElementById('nextBtn').classList.remove('hidden');
+            } else {
+                document.getElementById('resultsBtn').classList.remove('hidden');
+            }
+        }
+
+        function showFeedback(selectedOption, isCorrect) {
+            const container = document.getElementById('feedbackContainer');
+            const question = QUIZ_DATA.questions[currentQuestion];
+            
+            let feedbackHTML = `
+                <div class="feedback ${isCorrect ? 'correct' : 'incorrect'}">
+                    <div class="feedback-title">
+                        <span class="feedback-icon">${isCorrect ? '✅' : '❌'}</span>
+                        ${isCorrect ? 'Correct!' : 'Incorrect'}
+                    </div>
+                    <div class="explanation">
+                        <strong>Your answer:</strong> ${escapeHtml(selectedOption.text)}<br>
+                        <strong>Explanation:</strong> ${escapeHtml(selectedOption.explanation)}
+                    </div>
+                </div>
+            `;
+
+            // Show correct answer if wrong
+            if (!isCorrect) {
+                const correctOption = question.options.find(opt => opt.correct);
+                const correctIndex = question.options.findIndex(opt => opt.correct);
+                const correctLetter = String.fromCharCode(65 + correctIndex);
+                
+                feedbackHTML += `
+                    <div class="feedback correct" style="margin-top: 15px;">
+                        <div class="feedback-title">
+                            <span class="feedback-icon">✓</span>
+                            Correct Answer: ${correctLetter}) ${escapeHtml(correctOption.text)}
+                        </div>
+                    </div>
+                `;
+
+                // Highlight correct option
+                document.querySelectorAll('.option')[correctIndex].classList.add('correct');
+                document.querySelectorAll('.option')[selectedAnswer].classList.add('incorrect');
+            } else {
+                document.querySelectorAll('.option')[selectedAnswer].classList.add('correct');
+            }
+
+            container.innerHTML = feedbackHTML;
+            container.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResults() {
+            document.getElementById('progressContainer').classList.add('hidden');
+            document.getElementById('quizContent').classList.add('hidden');
+            
+            const container = document.getElementById('resultsContainer');
+            const totalQuestions = QUIZ_DATA.questions.length;
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            let performance, performanceClass;
+            if (percentage >= 90) {
+                performance = '🌟 Excellent!';
+                performanceClass = 'excellent';
+            } else if (percentage >= 70) {
+                performance = '👍 Good job!';
+                performanceClass = 'good';
+            } else if (percentage >= 50) {
+                performance = '👌 Fair';
+                performanceClass = 'fair';
+            } else {
+                performance = '📚 Needs improvement';
+                performanceClass = 'needs-improvement';
+            }
+
+            // Create breakdown
+            let breakdownHTML = '';
+            answers.forEach((answer, index) => {
+                const icon = answer.correct ? '✅' : '❌';
+                const status = answer.correct ? 'Correct' : 'Incorrect';
+                const className = answer.correct ? 'correct' : 'incorrect';
+                breakdownHTML += `
+                    <div class="breakdown-item ${className}">
+                        ${icon} <strong>Question ${index + 1}:</strong> ${status}
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <div class="results-header">🎉 Quiz Complete! 🎉</div>
+                <div class="score-display">${score}/${totalQuestions}</div>
+                <div class="percentage">${percentage}%</div>
+                <div class="performance ${performanceClass}">${performance}</div>
+                
+                <div class="breakdown">
+                    <h3>📊 Question Breakdown</h3>
+                    ${breakdownHTML}
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <button class="btn" onclick="restartQuiz()">🔄 Take Quiz Again</button>
+                </div>
+
+                <div style="margin-top: 20px; color: #666;">
+                    <p>Thank you for taking the <strong>${escapeHtml(QUIZ_DATA.title)}</strong>!</p>
+                </div>
+            `;
+            
+            container.classList.remove('hidden');
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            answers = [];
+            selectedAnswer = null;
+            
+            document.getElementById('resultsContainer').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+        }
+
+        function updateProgress() {
+            const totalQuestions = QUIZ_DATA.questions.length;
+            const progressPercent = Math.round((currentQuestion / totalQuestions) * 100);
+            const answeredQuestions = answers.length;
+            
+            document.getElementById('questionProgress').textContent = 
+                `Question ${currentQuestion + 1} of ${totalQuestions}`;
+            document.getElementById('scoreDisplay').textContent = 
+                `Score: ${score}/${answeredQuestions}`;
+            document.getElementById('progressFill').style.width = `${progressPercent}%`;
+            document.getElementById('progressFill').textContent = `${progressPercent}%`;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Initialize quiz info on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('totalQuestions').textContent = QUIZ_DATA.questions.length;
+        });
+    </script>
+</body>
+</html>
