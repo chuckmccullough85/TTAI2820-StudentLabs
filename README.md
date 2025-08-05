@@ -88,8 +88,8 @@ After completing the setup from the AI-MLSetup repository, verify your installat
 
 ```bash
 # Clone this course repository
-git clone https://github.com/chuckmccullough85/TTAI2820.git
-cd TTAI2820
+git clone https://github.com/chuckmccullough85/TTAI2820-StudentLabs.git
+cd TTAI2820-StudentLabs
 
 # Create and activate virtual environment (if not already done)
 python -m venv .venv
